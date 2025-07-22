@@ -1,0 +1,267 @@
+{% extends 'navigation2.html' %}
+{% load static %}
+{% block b %}
+
+<style>
+    body {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 50%, #4b6cb7 100%);
+        min-height: 100vh;
+        background-attachment: fixed;
+    }
+
+    .search-container {
+        color: #333;
+        border-radius: 12px;
+        background-color: rgba(255, 255, 255, 0.95);
+        padding: 40px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .search-container:hover {
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    }
+
+    input[type=text], input[type=password], input[type=date], select {
+        border-radius: 8px;
+        width: 100%;
+        height: 45px;
+        border: 1px solid #ddd;
+        padding: 0 15px;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        background-color: rgba(255, 255, 255, 0.8);
+    }
+
+    input[type=text]:focus, input[type=password]:focus, input[type=date]:focus, select:focus {
+        border-color: #4a90e2;
+        box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+        outline: none;
+        background-color: white;
+    }
+
+    .search-btn {
+        color: white;
+        border-radius: 8px;
+        width: 150px;
+        height: 45px;
+        background: linear-gradient(135deg, #4b6cb7 0%, #4a90e2 100%);
+        border: none;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .search-btn:hover {
+        background: linear-gradient(135deg, #3a5a9a 0%, #3a7bc8 100%);
+        transform: translateY(-2px);
+    }
+
+    .train-card {
+        display: flex;
+        margin-bottom: 30px;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.95);
+    }
+
+    .train-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .train-image {
+        width: 200px;
+        height: 180px;
+        object-fit: cover;
+    }
+
+    .train-info {
+        padding: 20px;
+        flex-grow: 1;
+    }
+
+    .train-name {
+        font-size: 22px;
+        font-weight: 700;
+        margin-bottom: 5px;
+        color: #333;
+    }
+
+    .train-detail {
+        font-size: 16px;
+        margin-bottom: 5px;
+        color: #666;
+    }
+
+    .book-btn {
+        background: linear-gradient(135deg, #4b6cb7 0%, #4a90e2 100%);
+        border: none;
+        border-radius: 8px;
+        padding: 12px 25px;
+        color: white;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .book-btn:hover {
+        background: linear-gradient(135deg, #3a5a9a 0%, #3a7bc8 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(74, 144, 226, 0.3);
+    }
+
+    .section-title {
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        color: #333;
+        position: relative;
+        padding-bottom: 10px;
+    }
+
+    .section-title:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(135deg, #4b6cb7 0%, #4a90e2 100%);
+    }
+
+    .form-group {
+        margin-bottom: 25px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #444;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in {
+        animation: fadeIn 0.6s ease forwards;
+    }
+
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+    .delay-4 { animation-delay: 0.4s; }
+
+    .train-class-badge {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 20px;
+        background-color: #e1f0ff;
+        color: #4a90e2;
+        font-size: 14px;
+        font-weight: 600;
+        margin-top: 5px;
+    }
+</style>
+
+<div class="search-container">
+    {% if error %}
+        <h3 class="section-title fade-in">All Available Trains</h3>
+        <hr class="fade-in">
+
+        <div class="fade-in delay-1">
+            {% for i in route1 %}
+            <div class="train-card">
+                <img src="{{i.0.img.url}}" class="train-image">
+                <div class="train-info">
+                    <div class="train-name">{{i.0.trainname}}</div>
+                    <div class="train-detail">Train Number: {{i.0.train_no}}</div>
+                    <div class="train-detail">From: {{i.0.from_city}} → To: {{i.0.to_city}}</div>
+                    <div class="train-detail">Fare: ₹{{fare3}}</div>
+                    <div class="train-class-badge">{{tclass}}</div>
+                </div>
+                <div style="display: flex; align-items: center; padding: 20px;">
+                    <a href="{% url 'book_detail' coun i.0.id route %}" class="book-btn">Book Now</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+    {% else %}
+        <h3 class="section-title fade-in">Search Trains</h3>
+        <hr class="fade-in delay-1">
+
+        <form method="post" action="" class="fade-in delay-2">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="fcity">From City</label>
+                <select name="fcity" id="fcity" required>
+                    {% for i in data2 %}
+                        <option value="{{i.route}}">{{i.route}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="tcity">To City</label>
+                <select name="tcity" id="tcity" required>
+                    {% for i in data2 %}
+                        <option value="{{i.route}}">{{i.route}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="date">Travel Date</label>
+                <input type="date" name="date" id="date" required>
+            </div>
+
+            <div class="form-group">
+                <label for="tclass">Train Class</label>
+                <select name="tclass" id="tclass" required>
+                    <option value="Sleeper">Sleeper</option>
+                    <option value="General">General</option>
+                    <option value="AC First class (1A)">AC First class (1A)</option>
+                    <option value="AC 2 Tier(2A)">AC 2 Tier(2A)</option>
+                    <option value="AC 3 Tier(3A)">AC 3 Tier(3A)</option>
+                </select>
+            </div>
+
+            <button type="submit" class="search-btn">
+                Search Trains
+            </button>
+        </form>
+    {% endif %}
+</div>
+
+<script>
+    // Set minimum date to today
+    document.getElementById('date').min = new Date().toISOString().split('T')[0];
+
+    // Add animation to form elements on focus
+    const inputs = document.querySelectorAll('input, select');
+    inputs.forEach(input => {
+        input.addEventListener('focus', function() {
+            this.parentNode.classList.add('active');
+        });
+        input.addEventListener('blur', function() {
+            this.parentNode.classList.remove('active');
+        });
+    });
+</script>
+
+{% endblock %}

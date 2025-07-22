@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Online Train Ticket Booking</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS and JS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <style>
+        input[type=text], input[type=password] {
+            border-radius: 8px;
+            width: 600px;
+            height: 32px;
+            padding: 5px 10px;
+        }
+
+        .main-header {
+            background-color: #333;
+            border-radius: 10px;
+            padding: 15px 0;
+            margin-top: 20px;
+        }
+
+        .main-header h1 {
+            color: white;
+            margin: 0;
+        }
+
+        .main-header span {
+            font-size: 36px;
+        }
+
+        body {
+            background-color: hsl(0, 0%, 47%);
+            margin: 20px 50px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Centered Header -->
+    <div class="text-center main-header">
+        <h1>
+            <strong>
+                <span>T</span>rain
+                <span>T</span>icket
+                <span>B</span>ooking
+                <span>S</span>ystem
+            </strong>
+        </h1>
+    </div>
+
+    <!-- Django block for additional content -->
+    {% block body %}
+    {% endblock %}
+
+</body>
+</html>

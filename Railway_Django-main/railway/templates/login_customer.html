@@ -1,0 +1,137 @@
+{% extends 'navigation.html' %}
+{% load static %}
+{% block a %}
+<style>
+    body {
+        background: linear-gradient(135deg, #f2f2f2, #e6f7ff);
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .login-container {
+        margin-top: 80px;
+        background-color: white;
+        padding: 50px;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        width: 600px;
+        animation: zoomIn 1s ease;
+    }
+
+    @keyframes zoomIn {
+        0% {
+            transform: scale(0.8);
+            opacity: 0;
+        }
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+    h3 {
+        font-size: 32px;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 10px;
+        animation: fadeIn 1.5s ease-in-out;
+    }
+
+    hr {
+        width: 100px;
+        border: 2px solid #0073e6;
+        margin: 10px auto 30px;
+    }
+
+    label {
+        display: block;
+        font-size: 18px;
+        margin-bottom: 6px;
+        color: #444;
+        text-align: left;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+        border-radius: 8px;
+        width: 100%;
+        height: 48px;
+        padding: 10px 15px;
+        font-size: 18px;
+        border: 1px solid #ccc;
+        margin-bottom: 25px;
+        transition: 0.3s ease;
+    }
+
+    input[type="text"]::placeholder,
+    input[type="password"]::placeholder {
+        font-size: 16px;
+        color: #aaa;
+    }
+
+    input[type="text"]:focus,
+    input[type="password"]:focus {
+        border-color: #0073e6;
+        outline: none;
+        box-shadow: 0 0 8px rgba(0, 115, 230, 0.2);
+    }
+
+    input[type="submit"] {
+        background-color: #0073e6;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        width: 140px;
+        height: 45px;
+        font-size: 18px;
+        cursor: pointer;
+        transition: 0.3s ease;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #005bb5;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
+{% if error %}
+<script>
+    alert('Logged in Successfully');
+    window.location = '{% url 'dashboard' %}';
+</script>
+{% endif %}
+
+{% if error2 %}
+<script>
+    alert('Logged in Successfully');
+    window.location = '{% url 'admindashboard' %}';
+</script>
+{% endif %}
+
+{% if error3 %}
+<script>
+    alert('Username & Password are not correct');
+    window.location = '{% url 'login_customer' %}';
+</script>
+{% endif %}
+
+<center>
+    <div class="login-container">
+        <h3>Login to Your Account</h3>
+        <hr>
+        <form method="post" action="">
+            {% csrf_token %}
+            <label for="uname">User Name:</label>
+            <input type="text" required placeholder="Enter user name" name="uname" id="uname">
+
+            <label for="pwd">Password:</label>
+            <input type="password" required placeholder="Enter password" name="pwd" id="pwd">
+
+            <input type="submit" value="Sign in">
+        </form>
+    </div>
+</center>
+{% endblock %}

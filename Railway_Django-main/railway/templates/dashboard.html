@@ -1,0 +1,272 @@
+{% extends 'navigation2.html' %}
+{% load static %}
+{% block b %}
+
+<style>
+    body {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Header styling */
+    .header-container {
+        background: linear-gradient(135deg, #3a7bd5 0%, #00d2ff 100%);
+        color: white;
+        padding: 20px 0;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .header-container::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(
+            to bottom right,
+            rgba(255,255,255,0.3) 0%,
+            rgba(255,255,255,0) 60%
+        );
+        transform: rotate(30deg);
+        animation: shine 6s infinite;
+    }
+
+    @keyframes shine {
+        0% { transform: rotate(30deg) translate(-30%, -30%); }
+        100% { transform: rotate(30deg) translate(30%, 30%); }
+    }
+
+    .header-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .system-title {
+        text-align: center;
+        font-size: 28px;
+        font-weight: bold;
+        margin: 0;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        animation: fadeInDown 0.8s ease-out;
+    }
+
+    /* Digital Clock Styles */
+    .digital-clock {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: rgba(0, 0, 0, 0.8);
+        color: #00ff00;
+        padding: 12px 20px;
+        border-radius: 8px;
+        font-family: 'Courier New', monospace;
+        font-size: 20px;
+        font-weight: bold;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        z-index: 1000;
+        border: 1px solid rgba(0, 255, 0, 0.3);
+        animation:
+            fadeIn 1s ease-out,
+            glow 2s infinite alternate;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes glow {
+        from { box-shadow: 0 0 5px rgba(0, 255, 0, 0.5); }
+        to { box-shadow: 0 0 15px rgba(0, 255, 0, 0.8); }
+    }
+
+    .dashboard-container {
+        max-width: 800px;
+        margin: 80px auto 50px;
+        padding: 0 20px;
+        position: relative;
+    }
+
+    .dashboard-card {
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        text-align: center;
+        transform: translateY(20px);
+        opacity: 0;
+        animation: fadeInUp 0.6s forwards;
+    }
+
+    .dashboard-title {
+        color: #3a7bd5;
+        font-size: 32px;
+        margin-bottom: 30px;
+        font-weight: 600;
+        position: relative;
+        display: inline-block;
+    }
+
+    .dashboard-title:after {
+        content: '';
+        position: absolute;
+        width: 50px;
+        height: 3px;
+        background: linear-gradient(to right, #3a7bd5, #00d2ff);
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .dashboard-btn {
+        display: block;
+        width: 100%;
+        padding: 15px;
+        margin: 20px 0;
+        border: none;
+        border-radius: 10px;
+        background: linear-gradient(135deg, #3a7bd5 0%, #00d2ff 100%);
+        color: white;
+        font-size: 18px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(58, 123, 213, 0.3);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .dashboard-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(58, 123, 213, 0.4);
+    }
+
+    .dashboard-btn:active {
+        transform: translateY(1px);
+    }
+
+    .dashboard-btn:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        transition: 0.5s;
+    }
+
+    .dashboard-btn:hover:after {
+        left: 100%;
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Staggered animations for buttons */
+    .dashboard-btn:nth-child(1) { animation-delay: 0.2s; }
+    .dashboard-btn:nth-child(2) { animation-delay: 0.4s; }
+    .dashboard-btn:nth-child(3) { animation-delay: 0.6s; }
+    .dashboard-btn:nth-child(4) { animation-delay: 0.8s; }
+
+    hr {
+        border: 0;
+        height: 1px;
+        background: linear-gradient(to right, transparent, #3a7bd5, transparent);
+        margin: 30px 0;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+        .dashboard-container {
+            padding: 0 15px;
+            margin-top: 100px;
+        }
+        .dashboard-card {
+            padding: 30px 20px;
+        }
+        .dashboard-btn {
+            padding: 12px;
+            font-size: 16px;
+        }
+        .digital-clock {
+            top: 10px;
+            right: 10px;
+            font-size: 16px;
+            padding: 8px 12px;
+        }
+    }
+</style>
+
+<!-- Digital Clock -->
+<div class="digital-clock" id="digitalClock">
+    Loading time...
+</div>
+
+<!-- Dashboard Content -->
+<div class="dashboard-container">
+    <div class="dashboard-card">
+        <h1 class="dashboard-title">Dashboard</h1>
+
+        <a href="{% url 'dashboard' %}" class="dashboard-btn">Dashboard</a>
+        <a href="{% url 'search_train' %}" class="dashboard-btn">Search Train</a>
+        <a href="{% url 'my_booking' %}" class="dashboard-btn">My Bookings</a>
+        <a href="{% url 'log_out' %}" class="dashboard-btn">Logout</a>
+    </div>
+</div>
+
+<script>
+    // Enhanced Digital Clock Functionality
+    function updateClock() {
+        const now = new Date();
+        const hours = now.getHours().toString().padStart(2, '0');
+        const minutes = now.getMinutes().toString().padStart(2, '0');
+        const seconds = now.getSeconds().toString().padStart(2, '0');
+        const day = now.toLocaleDateString('en-US', { weekday: 'short' });
+        const date = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+
+        const timeString = `${hours}:${minutes}:${seconds}`;
+        const dateString = `${day}, ${date}`;
+
+        document.getElementById('digitalClock').innerHTML = `
+            <div style="text-align: center;">
+                <div style="font-size: 0.8em; margin-bottom: 2px;">${dateString}</div>
+                <div>${timeString}</div>
+            </div>
+        `;
+    }
+
+    // Update clock immediately and then every second
+    updateClock();
+    setInterval(updateClock, 1000);
+</script>
+
+{% endblock %}

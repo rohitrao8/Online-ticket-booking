@@ -1,0 +1,143 @@
+{% extends 'navigation.html' %}
+{% load static %}
+{% block a %}
+<style>
+    body {
+        background: linear-gradient(to bottom, #ff9933, #ffffff, #138808); /* Tricolor */
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .register-container {
+        max-width: 700px;
+        margin: 50px auto;
+        background-color: white;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        animation: fadeInUp 1s ease;
+    }
+
+    .register-container h3 {
+        color: #333;
+        font-size: 28px;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    .register-container hr {
+        border-top: 2px solid #ff9933;
+        width: 60%;
+        margin: 10px auto 30px;
+    }
+
+    label {
+        font-weight: 600;
+        font-size: 16px;
+        margin-top: 10px;
+        display: block;
+        color: #333;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="date"] {
+        width: 100%;
+        height: 40px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        padding-left: 12px;
+        margin-top: 5px;
+        margin-bottom: 20px;
+        font-size: 15px;
+    }
+
+    .gender-section {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .gender-section label {
+        margin-top: 0;
+        font-weight: normal;
+    }
+
+    input[type="submit"] {
+        background-color: #138808;
+        color: white;
+        font-size: 16px;
+        padding: 8px 30px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.3s ease;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #0f6e06;
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+
+{% if error %}
+<script>
+    alert('Registration Successful');
+    window.location = '{% url "login_customer" %}';
+</script>
+{% endif %}
+
+<div class="register-container">
+    <h3><strong>Register Your Account</strong></h3>
+    <hr>
+    <form method="post" action="">
+        {% csrf_token %}
+
+        <label>First Name:</label>
+        <input type="text" required placeholder="Enter first name" name="fname">
+
+        <label>Last Name:</label>
+        <input type="text" required placeholder="Enter last name" name="lname">
+
+        <label>Username:</label>
+        <input type="text" required placeholder="Enter username" name="uname">
+
+        <label>Password:</label>
+        <input type="password" required placeholder="Enter password" name="pwd">
+
+        <label>Gender:</label>
+        <div class="gender-section">
+            <label><input type="radio" value="Male" name="male"> Male</label>
+            <label><input type="radio" value="Female" name="male"> Female</label>
+        </div>
+
+        <label>Email:</label>
+        <input type="email" placeholder="Enter email" name="email">
+
+        <label>Mobile:</label>
+        <input type="text" required placeholder="Enter mobile number" name="mobile">
+
+        <label>Date of Birth:</label>
+        <input type="date" required name="birth">
+
+        <label>Full Address:</label>
+        <input type="text" required placeholder="Enter full address" name="add">
+
+        <center>
+            <input type="submit" value="Sign Up">
+        </center>
+    </form>
+</div>
+
+{% endblock %}
